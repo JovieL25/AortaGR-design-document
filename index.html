@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to AortaGeomRecon’s documentation! &mdash; AortaGeomRecon  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="AortaGeomReconModule" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            AortaGeomRecon
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">AortaGeomReconModule</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">AortaGeomRecon</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Welcome to AortaGeomRecon’s documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-aortageomrecon-s-documentation">
+<h1>Welcome to AortaGeomRecon’s documentation!<a class="headerlink" href="#welcome-to-aortageomrecon-s-documentation" title="Permalink to this heading"></a></h1>
+<p>This is the design document for the AortaGeomRecon module, a <a class="reference internal" href="glossary.html#term-3D-Slicer"><span class="xref std std-term">3D Slicer</span></a> extension to perform <a class="reference internal" href="glossary.html#term-Aorta"><span class="xref std std-term">Aorta</span></a> segmentation and Aorta geometry reconstruction.</p>
+<p>You can find the source code, the installation guide, and the user manual in the project’s <a class="reference external" href="https://github.com/smiths/aorta">repository</a>.</p>
+<hr class="docutils" />
+<section id="the-steps-before-applying-the-main-algorithm">
+<h2>The steps before applying the main algorithm<a class="headerlink" href="#the-steps-before-applying-the-main-algorithm" title="Permalink to this heading"></a></h2>
+<p>The algorithm works best with the chest volume cropped to a rectangular prism that contains the aorta and parts of the other organs such as the backbone, blood vessels, and the heart. This can be done with <a class="reference internal" href="glossary.html#term-3D-Slicer"><span class="xref std std-term">3D Slicer</span></a> and its submodule <a class="reference external" href="https://slicer.readthedocs.io/en/latest/user_guide/modules/volumerendering.html">Volume rendering</a>. A detailed guide can be found on the <a class="reference external" href="https://github.com/smiths/aorta#to-use-volume-rendering-to-crop-a-voi">volume rendering and cropping section</a> of the user instructions.</p>
+<p>After cropping the volume, which only contains the region of interest, the algorithm needs a set of variables inputs from the user. These variables are:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="glossary.html#term-Descending-Aorta"><span class="xref std std-term">Descending Aorta</span></a> and <a class="reference internal" href="glossary.html#term-Ascending-Aorta"><span class="xref std std-term">Ascending Aorta</span></a> centre coordinate.</p></li>
+<li><p><a class="reference internal" href="glossary.html#term-Qualified-coefficient"><span class="xref std std-term">Qualified coefficient</span></a></p></li>
+<li><p>An integer to indicate the number of slices that the algorithm is allowed to skip.</p></li>
+</ol>
+</section>
+<section id="the-main-ideas-of-the-algorithm">
+<h2>The main ideas of the algorithm<a class="headerlink" href="#the-main-ideas-of-the-algorithm" title="Permalink to this heading"></a></h2>
+<p>At the beginning of the algorithm, the user’s input on the aorta centre is used to generate the seed slice, 2-dimensional circle image. This seed slice will be used as a reference throughout the workflow of the algorithm. Therefore, changing the input of the centre coordinate could generate a slightly different segmentation result.</p>
+<p>For each slice starting from the user’s selected slice going in the inferior or superior direction</p>
+<ol class="arabic">
+<li><p>The algorithm generates a label image by making a grid spacing 3 pixels aparts, overwrites the values of these pixels to white pixel (value of 1).</p></li>
+<li><p>By using <a class="reference external" href="https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelStatisticsImageFilter.html">SITK::LabelStatisticsImageFilter</a>, we get the mean and the sigma of the intensity image with the white pixel.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A <a class="reference internal" href="glossary.html#term-Label-Statistic-coefficient"><span class="xref std std-term">Label Statistic coefficient</span></a> is used to control the threshold range. With a Larger label statistic coefficient, the algorithm will use a larger range of threshold to perform segmentation.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p>The algorithm then creates another image, the Euclidean distance transform of a binary image as the image intensity map, and uses it with <a class="reference external" href="https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ThresholdSegmentationLevelSetImageFilter.html">SITK::ThresholdSegmentationLevelSetImageFilter</a> to create a segmented slice.</p></li>
+<li><p>The algorithm determines whether to accept the segmented slice or not, based on the number of white pixels on the segmented slice, and the qualified coefficient to control the limit.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To determine whether a segmented slice is acceptable, different conditions are verified for <a class="reference internal" href="glossary.html#term-Descending-Aorta"><span class="xref std std-term">Descending Aorta</span></a> and <a class="reference internal" href="glossary.html#term-Ascending-Aorta"><span class="xref std std-term">Ascending Aorta</span></a>. These conditions check are all involved with the <a class="reference internal" href="glossary.html#term-Qualified-coefficient"><span class="xref std std-term">Qualified coefficient</span></a>, which is decided by the user. In simple terms, the larger the <a class="reference internal" href="glossary.html#term-Qualified-coefficient"><span class="xref std std-term">Qualified coefficient</span></a>, the looser the condition on accepting a segmented slice.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p>If the algorithm accepted this segmented slice, a new centre coordinate is calculated and used as the seed coordinate for segmenting the next slice.</p></li>
+<li><p>When a segmented slice is not acceptable, the algorithm will skip this slice if the number of the skipped slice is less than the integer given by the user. The algorithm will try to replace these skipped slices by reading the overlapped area of the previous and the next slice.</p></li>
+</ol>
+</section>
+<section id="the-pseudocode-of-the-algorithm">
+<h2>The pseudocode of the algorithm<a class="headerlink" href="#the-pseudocode-of-the-algorithm" title="Permalink to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;inputs to the program</span>
+<span class="sd">      seed_aorta_centre: tuple (int, int)</span>
+<span class="sd">      seed_slice_index: int</span>
+<span class="sd">      qualified_coefficient: float</span>
+<span class="sd">      cropped_image: ndarray shape of (x, y, z)</span>
+
+<span class="sd">   outputs:</span>
+<span class="sd">      processing_image: ndarray shape of (x, y, z) with segmented volume</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">processing_image</span> <span class="o">=</span> <span class="n">cropped_image</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">white_pixel</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">black_pixel</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">segment_filter</span> <span class="o">=</span> <span class="n">sitk</span><span class="o">.</span><span class="n">ThresholdSegmentationLevelSetImageFilter</span><span class="p">()</span>
+<span class="n">skipped_slice</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">def</span> <span class="nf">calculate_seed</span><span class="p">(</span><span class="n">curr_slice</span><span class="p">,</span> <span class="n">prev_centre</span><span class="p">):</span>
+   <span class="c1"># Create a seed slice based on user&#39;s chosen aorta-centre coordinate</span>
+   <span class="c1"># Overwrites the values to white_pixel over a square around the centre</span>
+   <span class="n">seed</span> <span class="o">=</span> <span class="n">curr_slice</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+   <span class="n">spacing</span> <span class="o">=</span> <span class="mi">3</span>
+   <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="n">to</span> <span class="mi">2</span> <span class="n">do</span><span class="p">:</span>
+      <span class="n">circle_x</span> <span class="o">=</span> <span class="n">prev_centre</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">spacing</span><span class="o">*</span><span class="n">j</span>
+      <span class="n">seed</span><span class="p">[(</span><span class="n">circle_x</span><span class="p">,</span> <span class="n">prev_centre</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="n">white_pixel</span>
+   <span class="k">return</span> <span class="n">seed</span>
+
+<span class="k">def</span> <span class="nf">segment_single_slice</span><span class="p">(</span><span class="n">current_index</span><span class="p">,</span> <span class="n">prev_centre</span><span class="p">):</span>
+   <span class="c1"># retrieve the 2d slice to be processed</span>
+   <span class="n">curr_slice</span> <span class="o">=</span> <span class="n">cropped_image</span><span class="p">[:,:,</span> <span class="n">current_index</span><span class="p">]</span>
+   <span class="c1"># create a label map</span>
+   <span class="n">seed</span> <span class="o">=</span> <span class="n">calculate_seed</span><span class="p">(</span><span class="n">curr_slice</span><span class="p">,</span> <span class="n">prev_centre</span><span class="p">)</span>
+   <span class="c1"># Calculate statistics associated with white_pixel label</span>
+   <span class="n">stats</span> <span class="o">=</span> <span class="n">sitk</span><span class="o">.</span><span class="n">LabelStatisticsImageFilter</span><span class="p">()</span>
+   <span class="n">stats</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">curr_slice</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+   <span class="c1"># Threshold for SITK::ThresholdSegmentationLevelSetImageFilter</span>
+   <span class="c1"># stats.GetMean(white_pixel) returns the mean value of the intensity regions</span>
+   <span class="c1"># i.e the pixels around the white_pixel are within these range of thresholds</span>
+   <span class="c1"># The pixel far from the white_pixel have lower intensity value</span>
+   <span class="n">lower_threshold</span> <span class="o">=</span> <span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">GetMean</span><span class="p">(</span><span class="n">white_pixel</span><span class="p">)</span> <span class="o">-</span> <span class="n">label_stats_coef</span><span class="o">*</span><span class="n">stats</span><span class="o">.</span><span class="n">GetSigma</span><span class="p">(</span><span class="n">white_pixel</span><span class="p">))</span>
+   <span class="n">upper_threshold</span> <span class="o">=</span> <span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">GetMean</span><span class="p">(</span><span class="n">white_pixel</span><span class="p">)</span> <span class="o">+</span> <span class="n">label_stats_coef</span><span class="o">*</span><span class="n">stats</span><span class="o">.</span><span class="n">GetSigma</span><span class="p">(</span><span class="n">white_pixel</span><span class="p">))</span>
+   <span class="c1"># calculate the Euclidean distance transform and use it to perform segmentation</span>
+   <span class="n">init_ls</span> <span class="o">=</span> <span class="n">sitk</span><span class="o">.</span><span class="n">SignedMaurerDistanceMap</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+   <span class="n">segment_filter</span><span class="o">.</span><span class="n">SetLowerThreshold</span><span class="p">(</span><span class="n">lower_threshold</span><span class="p">)</span>
+   <span class="n">segment_filter</span><span class="o">.</span><span class="n">SetUpperThreshold</span><span class="p">(</span><span class="n">upper_threshold</span><span class="p">)</span>
+   <span class="c1"># Segmentated slice, a ndarrays of shape (x, y)</span>
+   <span class="k">return</span> <span class="n">segment_filter</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">init_ls</span><span class="p">,</span> <span class="n">curr_slice</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">count_pixels</span><span class="p">(</span><span class="n">segmented_slice</span><span class="p">):</span>
+   <span class="c1"># This function will count the number of white pixels in this segmented slice</span>
+   <span class="c1"># and calculate a new centre based on the</span>
+   <span class="n">num_of_white_pixel</span> <span class="o">=</span> <span class="mi">0</span>
+   <span class="n">x_coord</span> <span class="o">=</span> <span class="mi">0</span>
+   <span class="n">y_coord</span> <span class="o">=</span> <span class="mi">0</span>
+   <span class="k">for</span> <span class="n">x</span> <span class="kn">from</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">segmented_slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">y</span> <span class="kn">from</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">segmented_slice</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
+         <span class="k">if</span> <span class="n">segmented_slice</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">x_coord</span> <span class="o">+=</span> <span class="n">x</span>
+            <span class="n">y_coord</span> <span class="o">+=</span> <span class="n">y</span>
+            <span class="n">num_of_white_pixel</span> <span class="o">+=</span> <span class="mi">1</span>
+   <span class="n">new_centre</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_coord</span><span class="o">/</span><span class="n">num_of_white_pixel</span><span class="p">,</span> <span class="n">y_coord</span><span class="o">/</span><span class="n">num_of_white_pixel</span><span class="p">)</span>
+   <span class="k">return</span> <span class="n">num_of_white_pixel</span><span class="p">,</span> <span class="n">new_centre</span>
+
+<span class="k">def</span> <span class="nf">is_new_centre_qualified</span><span class="p">(</span><span class="n">new_size</span><span class="p">):</span>
+   <span class="c1"># compare new slice&#39;s number of white pixel to</span>
+   <span class="c1"># the original slice and the previous size</span>
+
+   <span class="n">condition_1</span> <span class="o">=</span> <span class="n">new_size</span> <span class="o">&lt;</span> <span class="n">original_size</span><span class="o">*</span><span class="n">qualified_coefficient</span>
+   <span class="n">condition_2</span> <span class="o">=</span> <span class="n">new_size</span> <span class="o">&gt;</span> <span class="n">original_size</span><span class="o">*</span><span class="n">qualified_coefficient</span>
+   <span class="n">condition_3</span> <span class="o">=</span> <span class="n">new_size</span> <span class="o">&lt;</span> <span class="n">prev_size</span><span class="o">*</span><span class="n">qualified_coefficient</span>
+
+   <span class="k">return</span> <span class="n">condition_1</span> <span class="ow">and</span> <span class="n">condition_2</span> <span class="ow">and</span> <span class="n">condition_3</span>
+
+<span class="c1"># The stats of the user&#39;s chosen slice will be used as reference</span>
+<span class="c1"># to determine whether a new segmented slice is acceptable</span>
+<span class="n">segmented_slice</span> <span class="o">=</span> <span class="n">segment_single_slice</span><span class="p">(</span><span class="n">seed_slice_index</span><span class="p">,</span> <span class="n">seed_aorta_centre</span><span class="p">)</span>
+
+<span class="c1"># Any pixel with positive intensity value will be set to white_pixel</span>
+<span class="n">new_slice</span> <span class="o">=</span> <span class="n">Array</span><span class="p">[</span><span class="n">segmented_slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">length</span><span class="p">][</span><span class="n">segmented_slice</span><span class="o">.</span><span class="n">length</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">x</span> <span class="kn">from</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">segmented_slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
+   <span class="k">for</span> <span class="n">y</span> <span class="kn">from</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">segmented_slice</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">segmented_slice</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">black_pixel</span><span class="p">:</span>
+         <span class="n">new_slice</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">white_pixel</span>
+      <span class="k">else</span><span class="p">:</span>
+         <span class="n">new_slice</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">black_pixel</span>
+
+<span class="c1"># orginal_size will be used to compare new slice&#39;s size</span>
+<span class="c1"># to determine if the new slice is acceptable</span>
+<span class="n">original_size</span><span class="p">,</span> <span class="n">original_centre</span> <span class="o">=</span> <span class="n">count_pixels</span><span class="p">(</span><span class="n">new_slice</span><span class="p">)</span>
+
+<span class="c1"># Repeat the above process for each slice</span>
+<span class="k">for</span> <span class="n">slice_i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+    <span class="n">cur_img_slice</span> <span class="o">=</span> <span class="n">cropped_image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">slice_i</span><span class="p">]</span>
+
+    <span class="c1"># prev_centre is the new derived centre from last segmented slice</span>
+    <span class="n">segmented_slice</span> <span class="o">=</span> <span class="n">segment_single_slice</span><span class="p">(</span><span class="n">slice_i</span><span class="p">,</span> <span class="n">prev_centre</span><span class="p">)</span>
+
+    <span class="c1"># element-wise operation, exactly what we doing with the double for-loop</span>
+    <span class="n">new_slice</span> <span class="o">=</span> <span class="n">segmented_slice</span> <span class="o">&gt;</span> <span class="n">PixelValue</span><span class="o">.</span><span class="n">black_pixel</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="n">total_coord</span><span class="p">,</span> <span class="n">centre</span> <span class="o">=</span> <span class="n">count_pixel</span><span class="p">(</span><span class="n">new_slice</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">is_new_centre_qualified</span><span class="p">(</span><span class="n">total_coord</span><span class="p">):</span>
+       <span class="c1"># processing_image is the segmented volume returned</span>
+       <span class="n">processing_image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">slice_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_slice</span>
+       <span class="n">prev_centre</span> <span class="o">=</span> <span class="n">centre</span>
+       <span class="c1"># for ascending aorta, we will generate more possible coordinates</span>
+       <span class="c1"># and use it in segmentation algorithm</span>
+       <span class="c1"># prev_seeds = seeds</span>
+    <span class="k">else</span><span class="p">:</span>
+       <span class="n">skipped_slice</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">slice_i</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">slice_i</span> <span class="ow">in</span> <span class="n">skipped_slice</span><span class="p">:</span>
+    <span class="c1"># replace processing_image[slice_i] with the intersection of its previous and next slice</span>
+
+<span class="k">return</span> <span class="n">processing_image</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can find the definitions of each function within the module below</p>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Modules documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">AortaGeomReconModule</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="test.html">test package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AortaGeomReconDisplayModuleLib.html">AortaGeomReconDisplayModuleLib package</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></div>
+<div class="line"><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></div>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-right" title="AortaGeomReconModule" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jingyi Lin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
