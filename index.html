@@ -104,7 +104,7 @@
 </div></blockquote>
 </li>
 <li><p>If the algorithm accepted this segmented slice, a new centre coordinate is calculated and used as the seed coordinate for segmenting the next slice.</p></li>
-<li><p>When a segmented slice is not acceptable, the algorithm will skip this slice if the number of the skipped slice is less than the integer given by the user. The algorithm will try to replace these skipped slices by reading the overlapped area of the previous and the next slice.</p></li>
+<li><p>When a segmented slice is not acceptable, the algorithm will skip this slice if the number of the skipped slice is less than the integer given by the user. The algorithm will try to replace these skipped slices with calculating the intersection of the previous and the next slice.</p></li>
 </ol>
 </section>
 <section id="the-pseudocode-of-the-algorithm">
