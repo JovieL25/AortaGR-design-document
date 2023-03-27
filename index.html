@@ -192,9 +192,9 @@
 <span class="linenos"> 65</span><span class="k">return</span> <span class="n">processing_image</span>
 <span class="linenos"> 66</span>
 <span class="linenos"> 67</span><span class="k">def</span> <span class="nf">calculate_seed</span><span class="p">(</span><span class="n">curr_slice</span><span class="p">,</span> <span class="n">prev_centre</span><span class="p">):</span>
-<span class="linenos"> 68</span>   <span class="c1"># Create a seed slice based on user&#39;s chosen aorta-centre coordinate</span>
-<span class="linenos"> 69</span>   <span class="c1"># Overwrites the values to white_pixel over a square around the centre</span>
-<span class="linenos"> 70</span>   <span class="n">seed</span> <span class="o">=</span> <span class="n">curr_slice</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="linenos"> 68</span>   <span class="c1"># Create a label map based on the centre coordinate</span>
+<span class="linenos"> 69</span>   <span class="c1"># sitk.BinaryDilate populate a circle-liked shape where pixel in the circle is marked as 1</span>
+<span class="linenos"> 70</span>   <span class="n">seed</span> <span class="o">=</span> <span class="n">curr_slice</span><span class="o">.</span><span class="n">copy_size</span><span class="p">()</span>
 <span class="linenos"> 71</span>   <span class="n">spacing</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="linenos"> 72</span>   <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="n">to</span> <span class="mi">2</span> <span class="n">do</span><span class="p">:</span>
 <span class="linenos"> 73</span>      <span class="n">circle_x</span> <span class="o">=</span> <span class="n">prev_centre</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">spacing</span><span class="o">*</span><span class="n">j</span>
