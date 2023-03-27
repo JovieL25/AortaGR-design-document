@@ -93,7 +93,12 @@
 </section>
 <section id="the-main-ideas-of-the-algorithm">
 <h2>The main ideas of the algorithm<a class="headerlink" href="#the-main-ideas-of-the-algorithm" title="Permalink to this heading"></a></h2>
-<p>At the beginning of the algorithm, the user’s inputs two integer coordinates indicating the position of the ascending aorta and descending aorta centre. The user’s chosen slice will be used as a reference throughout the workflow of the algorithm. Therefore, changing the input of the centre coordinate and different slice could generate a slightly different segmentation result.</p>
+<p>At the beginning of the algorithm, the user’s inputs the integer coordinates indicating the position of the descending aorta or ascending aorta centre.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The algorithm works separately on the descending aorta segmentation and the ascending aorta segmentation. Thus, it will ask user’s to input the coordiante of the descending aorta centre. After complete this segmentation, it will prompt user for the inputs variable of the ascending aorta.</p>
+</div>
+<p>The user’s chosen slice will be used as a reference throughout the workflow of the algorithm. Therefore, changing the input of the centre coordinate and different slice could generate a slightly different segmentation result</p>
 <p>For each slice starting from the user’s selected slice going in the <a class="reference internal" href="glossary.html#term-inferior"><span class="xref std std-term">inferior</span></a> or <a class="reference internal" href="glossary.html#term-superior"><span class="xref std std-term">superior</span></a> direction</p>
 <ol class="arabic">
 <li><p>The algorithm labels the input centre coordinate and three neighboring pixels that are each 3 pixels apart as the first sample region, by overwriting their values to white pixel (value of 1). With <a class="reference external" href="https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1BinaryDilateImageFilter.html">SITK::BinaryDilateImageFilter</a>, the algorithm generates a circle like shape label map.</p></li>
