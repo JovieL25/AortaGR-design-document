@@ -124,6 +124,49 @@
 <span class="n">segment_filter</span> <span class="o">=</span> <span class="n">sitk</span><span class="o">.</span><span class="n">ThresholdSegmentationLevelSetImageFilter</span><span class="p">()</span>
 <span class="n">skipped_slice</span> <span class="o">=</span> <span class="p">[]</span>
 
+<span class="c1"># The stats of the user&#39;s chosen slice will be used as reference</span>
+<span class="c1"># to determine whether a new segmented slice is acceptable</span>
+<span class="n">segmented_slice</span> <span class="o">=</span> <span class="n">segment_single_slice</span><span class="p">(</span><span class="n">seed_slice_index</span><span class="p">,</span> <span class="n">seed_aorta_centre</span><span class="p">)</span>
+
+<span class="c1"># Any pixel with positive intensity value will be set to white_pixel</span>
+<span class="n">new_slice</span> <span class="o">=</span> <span class="n">Array</span><span class="p">[</span><span class="n">segmented_slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">length</span><span class="p">][</span><span class="n">segmented_slice</span><span class="o">.</span><span class="n">length</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">x</span> <span class="kn">from</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">segmented_slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
+   <span class="k">for</span> <span class="n">y</span> <span class="kn">from</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">segmented_slice</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">segmented_slice</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">black_pixel</span><span class="p">:</span>
+         <span class="n">new_slice</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">white_pixel</span>
+      <span class="k">else</span><span class="p">:</span>
+         <span class="n">new_slice</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">black_pixel</span>
+
+<span class="c1"># orginal_size will be used to compare new slice&#39;s size</span>
+<span class="c1"># to determine if the new slice is acceptable</span>
+<span class="n">original_size</span><span class="p">,</span> <span class="n">original_centre</span> <span class="o">=</span> <span class="n">count_pixels</span><span class="p">(</span><span class="n">new_slice</span><span class="p">)</span>
+
+<span class="c1"># Repeat the above process for each slice</span>
+<span class="k">for</span> <span class="n">slice_i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+    <span class="n">cur_img_slice</span> <span class="o">=</span> <span class="n">cropped_image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">slice_i</span><span class="p">]</span>
+
+    <span class="c1"># prev_centre is the new derived centre from last segmented slice</span>
+    <span class="n">segmented_slice</span> <span class="o">=</span> <span class="n">segment_single_slice</span><span class="p">(</span><span class="n">slice_i</span><span class="p">,</span> <span class="n">prev_centre</span><span class="p">)</span>
+
+    <span class="c1"># element-wise operation, exactly what we doing with the double for-loop</span>
+    <span class="n">new_slice</span> <span class="o">=</span> <span class="n">segmented_slice</span> <span class="o">&gt;</span> <span class="n">PixelValue</span><span class="o">.</span><span class="n">black_pixel</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="n">total_coord</span><span class="p">,</span> <span class="n">centre</span> <span class="o">=</span> <span class="n">count_pixel</span><span class="p">(</span><span class="n">new_slice</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">is_new_centre_qualified</span><span class="p">(</span><span class="n">total_coord</span><span class="p">):</span>
+       <span class="c1"># processing_image is the segmented volume returned</span>
+       <span class="n">processing_image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">slice_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_slice</span>
+       <span class="n">prev_centre</span> <span class="o">=</span> <span class="n">centre</span>
+       <span class="c1"># for ascending aorta, we will generate more possible coordinates</span>
+       <span class="c1"># and use it in segmentation algorithm</span>
+       <span class="c1"># prev_seeds = seeds</span>
+    <span class="k">else</span><span class="p">:</span>
+       <span class="n">skipped_slice</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">slice_i</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">slice_i</span> <span class="ow">in</span> <span class="n">skipped_slice</span><span class="p">:</span>
+    <span class="c1"># replace processing_image[slice_i] with the intersection of its previous and next slice</span>
+
+<span class="k">return</span> <span class="n">processing_image</span>
+
 <span class="k">def</span> <span class="nf">calculate_seed</span><span class="p">(</span><span class="n">curr_slice</span><span class="p">,</span> <span class="n">prev_centre</span><span class="p">):</span>
    <span class="c1"># Create a seed slice based on user&#39;s chosen aorta-centre coordinate</span>
    <span class="c1"># Overwrites the values to white_pixel over a square around the centre</span>
@@ -179,49 +222,6 @@
    <span class="n">condition_3</span> <span class="o">=</span> <span class="n">new_size</span> <span class="o">&lt;</span> <span class="n">prev_size</span><span class="o">*</span><span class="n">qualified_coefficient</span>
 
    <span class="k">return</span> <span class="n">condition_1</span> <span class="ow">and</span> <span class="n">condition_2</span> <span class="ow">and</span> <span class="n">condition_3</span>
-
-<span class="c1"># The stats of the user&#39;s chosen slice will be used as reference</span>
-<span class="c1"># to determine whether a new segmented slice is acceptable</span>
-<span class="n">segmented_slice</span> <span class="o">=</span> <span class="n">segment_single_slice</span><span class="p">(</span><span class="n">seed_slice_index</span><span class="p">,</span> <span class="n">seed_aorta_centre</span><span class="p">)</span>
-
-<span class="c1"># Any pixel with positive intensity value will be set to white_pixel</span>
-<span class="n">new_slice</span> <span class="o">=</span> <span class="n">Array</span><span class="p">[</span><span class="n">segmented_slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">length</span><span class="p">][</span><span class="n">segmented_slice</span><span class="o">.</span><span class="n">length</span><span class="p">]</span>
-<span class="k">for</span> <span class="n">x</span> <span class="kn">from</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">segmented_slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
-   <span class="k">for</span> <span class="n">y</span> <span class="kn">from</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">segmented_slice</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
-      <span class="k">if</span> <span class="n">segmented_slice</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">black_pixel</span><span class="p">:</span>
-         <span class="n">new_slice</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">white_pixel</span>
-      <span class="k">else</span><span class="p">:</span>
-         <span class="n">new_slice</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">black_pixel</span>
-
-<span class="c1"># orginal_size will be used to compare new slice&#39;s size</span>
-<span class="c1"># to determine if the new slice is acceptable</span>
-<span class="n">original_size</span><span class="p">,</span> <span class="n">original_centre</span> <span class="o">=</span> <span class="n">count_pixels</span><span class="p">(</span><span class="n">new_slice</span><span class="p">)</span>
-
-<span class="c1"># Repeat the above process for each slice</span>
-<span class="k">for</span> <span class="n">slice_i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
-    <span class="n">cur_img_slice</span> <span class="o">=</span> <span class="n">cropped_image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">slice_i</span><span class="p">]</span>
-
-    <span class="c1"># prev_centre is the new derived centre from last segmented slice</span>
-    <span class="n">segmented_slice</span> <span class="o">=</span> <span class="n">segment_single_slice</span><span class="p">(</span><span class="n">slice_i</span><span class="p">,</span> <span class="n">prev_centre</span><span class="p">)</span>
-
-    <span class="c1"># element-wise operation, exactly what we doing with the double for-loop</span>
-    <span class="n">new_slice</span> <span class="o">=</span> <span class="n">segmented_slice</span> <span class="o">&gt;</span> <span class="n">PixelValue</span><span class="o">.</span><span class="n">black_pixel</span><span class="o">.</span><span class="n">value</span>
-
-    <span class="n">total_coord</span><span class="p">,</span> <span class="n">centre</span> <span class="o">=</span> <span class="n">count_pixel</span><span class="p">(</span><span class="n">new_slice</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">is_new_centre_qualified</span><span class="p">(</span><span class="n">total_coord</span><span class="p">):</span>
-       <span class="c1"># processing_image is the segmented volume returned</span>
-       <span class="n">processing_image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">slice_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_slice</span>
-       <span class="n">prev_centre</span> <span class="o">=</span> <span class="n">centre</span>
-       <span class="c1"># for ascending aorta, we will generate more possible coordinates</span>
-       <span class="c1"># and use it in segmentation algorithm</span>
-       <span class="c1"># prev_seeds = seeds</span>
-    <span class="k">else</span><span class="p">:</span>
-       <span class="n">skipped_slice</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">slice_i</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">slice_i</span> <span class="ow">in</span> <span class="n">skipped_slice</span><span class="p">:</span>
-    <span class="c1"># replace processing_image[slice_i] with the intersection of its previous and next slice</span>
-
-<span class="k">return</span> <span class="n">processing_image</span>
 </pre></div>
 </div>
 <div class="admonition note">
