@@ -243,7 +243,7 @@
 <span class="linenos">116</span>   <span class="c1"># the original slice and the previous size</span>
 <span class="linenos">117</span>
 <span class="linenos">118</span>   <span class="n">condition_1</span> <span class="o">=</span> <span class="n">new_size</span> <span class="o">&lt;</span> <span class="n">original_size</span><span class="o">*</span><span class="n">qualified_coefficient</span>
-<span class="linenos">119</span>   <span class="n">condition_2</span> <span class="o">=</span> <span class="n">new_size</span> <span class="o">&gt;</span> <span class="n">original_size</span><span class="o">*</span><span class="n">qualified_coefficient</span>
+<span class="linenos">119</span>   <span class="n">condition_2</span> <span class="o">=</span> <span class="n">new_size</span> <span class="o">&gt;</span> <span class="n">original_size</span><span class="o">/</span><span class="n">qualified_coefficient</span>
 <span class="linenos">120</span>   <span class="n">condition_3</span> <span class="o">=</span> <span class="n">new_size</span> <span class="o">&lt;</span> <span class="n">prev_size</span><span class="o">*</span><span class="n">qualified_coefficient</span>
 <span class="linenos">121</span>
 <span class="linenos">122</span>   <span class="k">return</span> <span class="n">condition_1</span> <span class="ow">and</span> <span class="n">condition_2</span> <span class="ow">and</span> <span class="n">condition_3</span>
