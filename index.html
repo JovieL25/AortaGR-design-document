@@ -84,7 +84,7 @@
 <ol class="arabic simple">
 <li><p><a class="reference internal" href="glossary.html#term-Descending-Aorta"><span class="xref std std-term">Descending Aorta</span></a> and <a class="reference internal" href="glossary.html#term-Ascending-Aorta"><span class="xref std std-term">Ascending Aorta</span></a> centre coordinate.</p></li>
 <li><p><a class="reference internal" href="glossary.html#term-Qualified-coefficient"><span class="xref std std-term">Qualified coefficient</span></a></p></li>
-<li><p>An integer to indicate the number of slices that the algorithm is allowed to skip.</p></li>
+<li><p>An integer to indicate the number of slices that the algorithm is allowed to skip consecutively.</p></li>
 </ol>
 </section>
 <section id="the-main-ideas-of-the-algorithm">
@@ -104,7 +104,14 @@
 </div></blockquote>
 </li>
 <li><p>If the algorithm accepted this segmented slice, a new centre coordinate is calculated and used as the seed coordinate for segmenting the next slice.</p></li>
-<li><p>When a segmented slice is not acceptable, the algorithm will skip this slice if the number of the skipped slice is less than the integer given by the user. The algorithm will try to replace these skipped slices with calculating the intersection of the previous and the next slice.</p></li>
+<li><p>When a segmented slice is not acceptable, the algorithm will skip this slice if the number of the consecutive skipped slice is less than the user’s limit. Otherwise, the algorithm will stop the segmentation loop.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The algorithm will replace these skipped slices with the calculated the intersection of the previous and the next slice.</p>
+</div>
+</div></blockquote>
+</li>
 </ol>
 </section>
 <section id="the-pseudocode-of-the-algorithm">
