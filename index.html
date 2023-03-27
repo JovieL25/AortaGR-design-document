@@ -159,7 +159,7 @@
 <span class="linenos"> 32</span>
 <span class="linenos"> 33</span><span class="c1"># orginal_size will be used to compare new slice&#39;s size</span>
 <span class="linenos"> 34</span><span class="c1"># to determine if the new slice is acceptable</span>
-<span class="linenos"> 35</span><span class="n">original_size</span><span class="p">,</span> <span class="n">original_centre</span> <span class="o">=</span> <span class="n">count_pixels</span><span class="p">(</span><span class="n">new_slice</span><span class="p">)</span>
+<span class="linenos"> 35</span><span class="n">original_size</span><span class="p">,</span> <span class="n">prev_centre</span> <span class="o">=</span> <span class="n">count_pixels</span><span class="p">(</span><span class="n">new_slice</span><span class="p">)</span>
 <span class="linenos"> 36</span>
 <span class="linenos"> 37</span><span class="c1"># Repeat the above process for each slice</span>
 <span class="linenos"> 38</span><span class="k">for</span> <span class="n">slice_i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
