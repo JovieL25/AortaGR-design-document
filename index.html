@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to AortaGeomRecon’s documentation! &mdash; AortaGeomRecon  documentation</title>
+  <title>Welcome to AortaGeomRecon’s design document! &mdash; AortaGeomRecon  documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/_static/custom.css" type="text/css" />
@@ -62,7 +62,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Welcome to AortaGeomRecon’s documentation!</li>
+      <li class="breadcrumb-item active">Welcome to AortaGeomRecon’s design document!</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -72,10 +72,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="welcome-to-aortageomrecon-s-documentation">
-<h1>Welcome to AortaGeomRecon’s documentation!<a class="headerlink" href="#welcome-to-aortageomrecon-s-documentation" title="Permalink to this heading"></a></h1>
+  <section id="welcome-to-aortageomrecon-s-design-document">
+<h1>Welcome to AortaGeomRecon’s design document!<a class="headerlink" href="#welcome-to-aortageomrecon-s-design-document" title="Permalink to this heading"></a></h1>
 <p>This is the design document for the AortaGeomRecon module, a <a class="reference internal" href="glossary.html#term-3D-Slicer"><span class="xref std std-term">3D Slicer</span></a> extension to perform <a class="reference internal" href="glossary.html#term-Aorta"><span class="xref std std-term">Aorta</span></a> segmentation and Aorta geometry reconstruction.</p>
 <p>You can find the source code, the installation guide, and the user manual in the project’s <a class="reference external" href="https://github.com/smiths/aorta">repository</a>.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<p>Automatic aorta segmentation in thoracic computed tomography (CT) scans is important for aortic calcification quantification and to guide the segmentation of other central vessels. The work to manually segment regions of interest can be time-consuming and repetitive, and there are some automatic aorta segmentation algorithms posted. This project implemented an semi-automatic algorithm that can extract the 3-dimensional segmentation of the aorta.</p>
+</section>
 <hr class="docutils" />
 <section id="the-steps-before-applying-the-main-algorithm">
 <h2>The steps before applying the main algorithm<a class="headerlink" href="#the-steps-before-applying-the-main-algorithm" title="Permalink to this heading"></a></h2>
@@ -118,10 +122,10 @@
 <h2>The pseudocode of the algorithm<a class="headerlink" href="#the-pseudocode-of-the-algorithm" title="Permalink to this heading"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="linenos">  2</span><span class="sd">inputs to the program</span>
-<span class="linenos">  3</span><span class="sd">   seed_aorta_centre: tuple (int, int)</span>
-<span class="linenos">  4</span><span class="sd">   seed_slice_index: int</span>
-<span class="linenos">  5</span><span class="sd">   qualified_coefficient: float</span>
-<span class="linenos">  6</span><span class="sd">   cropped_image: ndarray shape of (x, y, z)</span>
+<span class="linenos">  3</span><span class="sd">   cropped_image: ndarray shape of (x, y, z)</span>
+<span class="linenos">  4</span><span class="sd">   seed_aorta_centre: tuple (int, int)</span>
+<span class="linenos">  5</span><span class="sd">   seed_slice_index: int</span>
+<span class="linenos">  6</span><span class="sd">   qualified_coefficient: float</span>
 <span class="linenos">  7</span><span class="sd">   num_skipped_slice: int</span>
 <span class="linenos">  8</span>
 <span class="linenos">  9</span><span class="sd">outputs:</span>
@@ -247,8 +251,8 @@
 <p class="caption" role="heading"><span class="caption-text">Modules documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">AortaGeomReconModule</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="test.html">test package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="AortaGeomReconDisplayModuleLib.html">AortaGeomReconDisplayModuleLib package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">test package</a></li>
 </ul>
 </li>
 </ul>
