@@ -167,10 +167,10 @@
 <span class="linenos"> 40</span>    <span class="c1"># prev_centre is the new derived centre from last segmented slice</span>
 <span class="linenos"> 41</span>    <span class="n">segmented_slice</span> <span class="o">=</span> <span class="n">segment_single_slice</span><span class="p">(</span><span class="n">slice_i</span><span class="p">,</span> <span class="n">prev_centre</span><span class="p">)</span>
 <span class="linenos"> 42</span>
-<span class="linenos"> 43</span>    <span class="c1"># element-wise operation, exactly what we doing with the double for-loop</span>
-<span class="linenos"> 44</span>    <span class="n">new_slice</span> <span class="o">=</span> <span class="n">segmented_slice</span> <span class="o">&gt;</span> <span class="n">PixelValue</span><span class="o">.</span><span class="n">black_pixel</span><span class="o">.</span><span class="n">value</span>
+<span class="linenos"> 43</span>    <span class="c1"># element-wise operation, exactly what we doing with the double for-loop to assign white pixel and black pixel</span>
+<span class="linenos"> 44</span>    <span class="n">new_slice</span> <span class="o">=</span> <span class="n">segmented_slice</span> <span class="o">&gt;</span> <span class="n">black_pixel</span>
 <span class="linenos"> 45</span>
-<span class="linenos"> 46</span>    <span class="n">total_coord</span><span class="p">,</span> <span class="n">centre</span> <span class="o">=</span> <span class="n">count_pixel</span><span class="p">(</span><span class="n">new_slice</span><span class="p">)</span>
+<span class="linenos"> 46</span>    <span class="n">total_coord</span><span class="p">,</span> <span class="n">centre</span> <span class="o">=</span> <span class="n">count_pixels</span><span class="p">(</span><span class="n">new_slice</span><span class="p">)</span>
 <span class="linenos"> 47</span>    <span class="k">if</span> <span class="n">is_new_centre_qualified</span><span class="p">(</span><span class="n">total_coord</span><span class="p">):</span>
 <span class="linenos"> 48</span>       <span class="n">skip_counter</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="linenos"> 49</span>       <span class="c1"># processing_image is the segmented volume returned</span>
