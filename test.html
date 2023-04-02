@@ -13,13 +13,15 @@
   <![endif]-->
   
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="AortaGeomReconDisplayModuleLib package" href="AortaGeomReconDisplayModuleLib.html" />
-    <link rel="prev" title="AortaGeomReconModule" href="modules.html" /> 
+    <link rel="next" title="Glossary of Terms Used in AortaGeomRecon Documentation" href="glossary.html" />
+    <link rel="prev" title="AortaGeomReconDisplayModuleLib package" href="AortaGeomReconDisplayModuleLib.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,34 +46,14 @@
               <p class="caption" role="heading"><span class="caption-text">Modules documentation:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">AortaGeomReconModule</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="AortaGeomReconDisplayModuleLib.html">AortaGeomReconDisplayModuleLib package</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">test package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-conftest">conftest module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#conftest.pytest_addoption"><code class="docutils literal notranslate"><span class="pre">pytest_addoption()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#conftest.pytest_generate_tests"><code class="docutils literal notranslate"><span class="pre">pytest_generate_tests()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#module-test_image_preprocessing">test_image_preprocessing module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#test_image_preprocessing.DSC"><code class="docutils literal notranslate"><span class="pre">DSC()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#test_image_preprocessing.get_cropped_volume_image"><code class="docutils literal notranslate"><span class="pre">get_cropped_volume_image()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#test_image_preprocessing.mean_absolute_error"><code class="docutils literal notranslate"><span class="pre">mean_absolute_error()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#test_image_preprocessing.mean_square_error"><code class="docutils literal notranslate"><span class="pre">mean_square_error()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#test_image_preprocessing.print_result"><code class="docutils literal notranslate"><span class="pre">print_result()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#test_image_preprocessing.read_asc_volume_image"><code class="docutils literal notranslate"><span class="pre">read_asc_volume_image()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#test_image_preprocessing.read_desc_volume_image"><code class="docutils literal notranslate"><span class="pre">read_desc_volume_image()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#test_image_preprocessing.read_final_volume_image"><code class="docutils literal notranslate"><span class="pre">read_final_volume_image()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#test_image_preprocessing.root_mse"><code class="docutils literal notranslate"><span class="pre">root_mse()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#test_image_preprocessing.test_asc_and_final"><code class="docutils literal notranslate"><span class="pre">test_asc_and_final()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#test_image_preprocessing.test_compare_asc"><code class="docutils literal notranslate"><span class="pre">test_compare_asc()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#test_image_preprocessing.test_compare_des"><code class="docutils literal notranslate"><span class="pre">test_compare_des()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#test_image_preprocessing.test_compare_final_volume"><code class="docutils literal notranslate"><span class="pre">test_compare_final_volume()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#test_image_preprocessing.transform_image"><code class="docutils literal notranslate"><span class="pre">transform_image()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-conftest">conftest module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-test_image_preprocessing">test_image_preprocessing module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-test">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="AortaGeomReconDisplayModuleLib.html">AortaGeomReconDisplayModuleLib package</a></li>
 </ul>
 </li>
 </ul>
@@ -283,7 +265,7 @@ and Sørensen–Dice coefficient between the reference image and the test image<
 
 <dl class="py function">
 <dt class="sig sig-object py" id="test_image_preprocessing.test_asc_and_final">
-<span class="sig-prename descclassname"><span class="pre">test_image_preprocessing.</span></span><span class="sig-name descname"><span class="pre">test_asc_and_final</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualifiedCoef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lsCoef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testCase</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_image_preprocessing.test_asc_and_final" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">test_image_preprocessing.</span></span><span class="sig-name descname"><span class="pre">test_asc_and_final</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualifiedCoef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresholdCoef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testCase</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_image_preprocessing.test_asc_and_final" title="Permalink to this definition"></a></dt>
 <dd><p>Compare the  partially segmented aorta volume (descending and ascending aorta)
 to a fully segmented aorta volume (descending, ascending and sagittal).</p>
 <dl class="field-list simple">
@@ -291,7 +273,7 @@ to a fully segmented aorta volume (descending, ascending and sagittal).</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>limit</strong> (<em>float</em>) – the maximum Dice similarity coefficient difference allowed to pass the test.</p></li>
 <li><p><strong>qualifiedCoef</strong> (<em>float</em>) – the qualified coefficient value to process descending aorta segmentation.</p></li>
-<li><p><strong>lsCoef</strong> (<em>float</em>) – the factor used to determine the lower and upper threshold for label statistics image filter.</p></li>
+<li><p><strong>thresholdCoef</strong> (<em>float</em>) – the factor used to determine the lower and upper threshold for label statistics image filter.</p></li>
 <li><p><strong>testCase</strong> (<em>int</em>) – the test case to run the test (0-5).</p></li>
 </ul>
 </dd>
@@ -306,7 +288,7 @@ to a fully segmented aorta volume (descending, ascending and sagittal).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="test_image_preprocessing.test_compare_asc">
-<span class="sig-prename descclassname"><span class="pre">test_image_preprocessing.</span></span><span class="sig-name descname"><span class="pre">test_compare_asc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualifiedCoef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lsCoef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testCase</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_image_preprocessing.test_compare_asc" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">test_image_preprocessing.</span></span><span class="sig-name descname"><span class="pre">test_compare_asc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualifiedCoef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresholdCoef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testCase</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_image_preprocessing.test_compare_asc" title="Permalink to this definition"></a></dt>
 <dd><p>Read a test cases’ partially segmented volume (descending aorta) from /project-repo/test/sample,
 perform ascending aorta segmentation,
 and compare the result with the existing ascending aorta volume from /project-repo/test/sample</p>
@@ -315,7 +297,7 @@ and compare the result with the existing ascending aorta volume from /project-re
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>limit</strong> (<em>float</em>) – the maximum Dice similarity coefficient difference allowed to pass the test.</p></li>
 <li><p><strong>qualifiedCoef</strong> (<em>float</em>) – the qualified coefficient value to process descending aorta segmentation.</p></li>
-<li><p><strong>lsCoef</strong> (<em>float</em>) – the factor used to determine the lower and upper threshold for label statistics image filter.</p></li>
+<li><p><strong>thresholdCoef</strong> (<em>float</em>) – the factor used to determine the lower and upper threshold for label statistics image filter.</p></li>
 <li><p><strong>testCase</strong> (<em>int</em>) – the test case to run the test (0-5).</p></li>
 </ul>
 </dd>
@@ -330,7 +312,7 @@ and compare the result with the existing ascending aorta volume from /project-re
 
 <dl class="py function">
 <dt class="sig sig-object py" id="test_image_preprocessing.test_compare_des">
-<span class="sig-prename descclassname"><span class="pre">test_image_preprocessing.</span></span><span class="sig-name descname"><span class="pre">test_compare_des</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualifiedCoef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lsCoef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testCase</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_image_preprocessing.test_compare_des" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">test_image_preprocessing.</span></span><span class="sig-name descname"><span class="pre">test_compare_des</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualifiedCoef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresholdCoef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testCase</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_image_preprocessing.test_compare_des" title="Permalink to this definition"></a></dt>
 <dd><p>Read a test cases’ cropped volume from /project-repo/test/sample,
 perform descending aorta segmentation,
 and compare the result with the existing volume from /project-repo/test/sample.</p>
@@ -339,7 +321,7 @@ and compare the result with the existing volume from /project-repo/test/sample.<
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>limit</strong> (<em>float</em>) – the maximum Dice similarity coefficient difference allowed to pass the test.</p></li>
 <li><p><strong>qualifiedCoef</strong> (<em>float</em>) – the qualified coefficient value to process descending aorta segmentation.</p></li>
-<li><p><strong>lsCoef</strong> (<em>float</em>) – the factor used to determine the lower and upper threshold for label statistics image filter.</p></li>
+<li><p><strong>thresholdCoef</strong> (<em>float</em>) – the factor used to determine the lower and upper threshold for label statistics image filter.</p></li>
 <li><p><strong>testCase</strong> (<em>int</em>) – the test case to run the test (0-5).</p></li>
 </ul>
 </dd>
@@ -354,7 +336,7 @@ and compare the result with the existing volume from /project-repo/test/sample.<
 
 <dl class="py function">
 <dt class="sig sig-object py" id="test_image_preprocessing.test_compare_final_volume">
-<span class="sig-prename descclassname"><span class="pre">test_image_preprocessing.</span></span><span class="sig-name descname"><span class="pre">test_compare_final_volume</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualifiedCoef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lsCoef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testCase</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_image_preprocessing.test_compare_final_volume" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">test_image_preprocessing.</span></span><span class="sig-name descname"><span class="pre">test_compare_final_volume</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualifiedCoef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresholdCoef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testCase</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_image_preprocessing.test_compare_final_volume" title="Permalink to this definition"></a></dt>
 <dd><p>Read a test cases’ partially segmented volume (descending and ascending aorta) from /project-repo/test/sample,
 perform sagittal aorta segmentation,
 and compare the result with the existing sagittal aorta volume from /project-repo/test/sample</p>
@@ -363,7 +345,31 @@ and compare the result with the existing sagittal aorta volume from /project-rep
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>limit</strong> (<em>float</em>) – the maximum Dice similarity coefficient difference allowed to pass the test.</p></li>
 <li><p><strong>qualifiedCoef</strong> (<em>float</em>) – the qualified coefficient value to process descending aorta segmentation.</p></li>
-<li><p><strong>lsCoef</strong> (<em>float</em>) – the factor used to determine the lower and upper threshold for label statistics image filter.</p></li>
+<li><p><strong>thresholdCoef</strong> (<em>float</em>) – the factor used to determine the lower and upper threshold for label statistics image filter.</p></li>
+<li><p><strong>testCase</strong> (<em>int</em>) – the test case to run the test (0-5).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pass the test if the Sørensen–Dice coefficient between test image and reference image is within the limit set by user.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test_image_preprocessing.test_debug">
+<span class="sig-prename descclassname"><span class="pre">test_image_preprocessing.</span></span><span class="sig-name descname"><span class="pre">test_debug</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualifiedCoef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresholdCoef</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testCase</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_image_preprocessing.test_debug" title="Permalink to this definition"></a></dt>
+<dd><p>Read a test cases’ cropped volume from /project-repo/test/sample,
+perform descending aorta segmentation,
+and compare the result with the existing volume from /project-repo/test/sample.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>limit</strong> (<em>float</em>) – the maximum Dice similarity coefficient difference allowed to pass the test.</p></li>
+<li><p><strong>qualifiedCoef</strong> (<em>float</em>) – the qualified coefficient value to process descending aorta segmentation.</p></li>
+<li><p><strong>thresholdCoef</strong> (<em>float</em>) – the factor used to determine the lower and upper threshold for label statistics image filter.</p></li>
 <li><p><strong>testCase</strong> (<em>int</em>) – the test case to run the test (0-5).</p></li>
 </ul>
 </dd>
@@ -403,8 +409,8 @@ and compare the result with the existing sagittal aorta volume from /project-rep
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="modules.html" class="btn btn-neutral float-left" title="AortaGeomReconModule" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="AortaGeomReconDisplayModuleLib.html" class="btn btn-neutral float-right" title="AortaGeomReconDisplayModuleLib package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="AortaGeomReconDisplayModuleLib.html" class="btn btn-neutral float-left" title="AortaGeomReconDisplayModuleLib package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="glossary.html" class="btn btn-neutral float-right" title="Glossary of Terms Used in AortaGeomRecon Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

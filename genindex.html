@@ -12,8 +12,10 @@
   <![endif]-->
   
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -79,6 +81,7 @@
  | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#L"><strong>L</strong></a>
@@ -118,7 +121,7 @@
 </li>
       <li><a href="AortaGeomReconDisplayModuleLib.html#AortaSegmenter.AortaSegmenter.__is_overlapping">__is_overlapping() (AortaSegmenter.AortaSegmenter method)</a>
 </li>
-      <li><a href="AortaGeomReconDisplayModuleLib.html#AortaSegmenter.AortaSegmenter.__prepare_seed">__prepare_seed() (AortaSegmenter.AortaSegmenter method)</a>
+      <li><a href="AortaGeomReconDisplayModuleLib.html#AortaSegmenter.AortaSegmenter.__prepare_label_map">__prepare_label_map() (AortaSegmenter.AortaSegmenter method)</a>
 </li>
       <li><a href="AortaGeomReconDisplayModuleLib.html#AortaSagitalSegmenter.AortaSagitalSegmenter.__segment_sag">__segment_sag() (AortaSagitalSegmenter.AortaSagitalSegmenter method)</a>
 </li>
@@ -188,6 +191,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-binary-dilation"><strong>binary dilation</strong></a>
+</li>
       <li><a href="AortaGeomReconDisplayModuleLib.html#AortaGeomReconEnums.PixelValue.black_pixel">black_pixel (AortaGeomReconEnums.PixelValue attribute)</a>
 </li>
   </ul></td>
@@ -203,6 +208,8 @@
         <li><a href="test.html#module-conftest">module</a>
 </li>
       </ul></li>
+      <li><a href="glossary.html#term-contour-line"><strong>contour line</strong></a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="AortaGeomReconDisplayModuleLib.html#AortaSagitalSegmenter.AortaSagitalSegmenter.cropped_image">cropped_image (AortaSagitalSegmenter.AortaSagitalSegmenter attribute)</a>
@@ -232,6 +239,14 @@
   </ul></td>
 </tr></table>
 
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-Euclidean-distance-transform"><strong>Euclidean distance transform</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -247,6 +262,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-inferior"><strong>inferior</strong></a>
+</li>
       <li><a href="AortaGeomReconDisplayModuleLib.html#AortaGeomReconEnums.SegmentDirection.Inferior_to_Superior">Inferior_to_Superior (AortaGeomReconEnums.SegmentDirection attribute)</a>
 </li>
   </ul></td>
@@ -255,7 +272,11 @@
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="glossary.html#term-Label-Statistic-coefficient"><strong>Label Statistic coefficient</strong></a>
+      <li><a href="glossary.html#term-label-map"><strong>label map</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-Level-sets"><strong>Level sets</strong></a>
 </li>
   </ul></td>
 </tr></table>
@@ -372,7 +393,7 @@
       </ul></li>
       <li><a href="AortaGeomReconDisplayModuleLib.html#AortaGeomReconEnums.SegmentDirection">SegmentDirection (class in AortaGeomReconEnums)</a>
 </li>
-      <li><a href="glossary.html#term-segmented-slice"><strong>segmented slice</strong></a>
+      <li><a href="glossary.html#term-Segmented-slice"><strong>Segmented slice</strong></a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -381,6 +402,8 @@
       <li><a href="glossary.html#term-slice"><strong>slice</strong></a>
 </li>
       <li><a href="AortaGeomReconDisplayModuleLib.html#AortaSegmenter.AortaSegmenter.starting_slice">starting_slice (AortaSegmenter.AortaSegmenter attribute)</a>
+</li>
+      <li><a href="glossary.html#term-superior"><strong>superior</strong></a>
 </li>
       <li><a href="AortaGeomReconDisplayModuleLib.html#AortaGeomReconEnums.SegmentDirection.Superior_to_Inferior">Superior_to_Inferior (AortaGeomReconEnums.SegmentDirection attribute)</a>
 </li>
@@ -403,9 +426,11 @@
 </li>
       <li><a href="test.html#test_image_preprocessing.test_compare_des">test_compare_des() (in module test_image_preprocessing)</a>
 </li>
+      <li><a href="test.html#test_image_preprocessing.test_compare_final_volume">test_compare_final_volume() (in module test_image_preprocessing)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="test.html#test_image_preprocessing.test_compare_final_volume">test_compare_final_volume() (in module test_image_preprocessing)</a>
+      <li><a href="test.html#test_image_preprocessing.test_debug">test_debug() (in module test_image_preprocessing)</a>
 </li>
       <li>
     test_image_preprocessing
@@ -414,6 +439,10 @@
         <li><a href="test.html#module-test_image_preprocessing">module</a>
 </li>
       </ul></li>
+      <li><a href="glossary.html#term-threshold"><strong>threshold</strong></a>
+</li>
+      <li><a href="glossary.html#term-Threshold-coefficient"><strong>Threshold coefficient</strong></a>
+</li>
       <li><a href="AortaGeomReconDisplayModuleLib.html#AortaSagitalSegmenter.AortaSagitalSegmenter.threshold_coef">threshold_coef (AortaSagitalSegmenter.AortaSagitalSegmenter attribute)</a>
 </li>
       <li><a href="test.html#test_image_preprocessing.transform_image">transform_image() (in module test_image_preprocessing)</a>
