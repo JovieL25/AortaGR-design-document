@@ -145,7 +145,7 @@ The pseudocode of the algorithm
       label_map = curr_slice.copy_size()
       spacing = 3
       for i = -1 to 1 do:
-         circle_x = prev_centre[0] + spacing*j
+         circle_x = prev_centre[0] + spacing*i
          label_map[(circle_x, prev_centre[1])] = white_pixel
       label_map = sitk.BinaryDilate(label_map, [3] * 2) 
       return label_map
