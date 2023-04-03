@@ -404,8 +404,8 @@ Finally, get the segmentation value with the Euclidean distance transform.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="AortaSegmenter.AortaSegmenter.__is_new_centre_qualified">
-<span class="sig-name descname"><span class="pre">__is_new_centre_qualified</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">total_coord</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_overlapping</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AortaSegmenter.AortaSegmenter.__is_new_centre_qualified" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="AortaSegmenter.AortaSegmenter.__is_new_slice_qualified">
+<span class="sig-name descname"><span class="pre">__is_new_slice_qualified</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">total_coord</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_overlapping</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AortaSegmenter.AortaSegmenter.__is_new_slice_qualified" title="Permalink to this definition"></a></dt>
 <dd><p>Return True if it satisfies the following conditions:</p>
 <ol class="arabic simple">
 <li><p>The number of white pixels of the segmented result is smaller than the previous size multiplis some ratio (the ratio could change depends on the segmentation type).</p></li>
@@ -435,11 +435,11 @@ return True if there are any voxel intersect or overlaps on each other between t
 <dl class="py method">
 <dt class="sig sig-object py" id="AortaSegmenter.AortaSegmenter.__prepare_label_map">
 <span class="sig-name descname"><span class="pre">__prepare_label_map</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AortaSegmenter.AortaSegmenter.__prepare_label_map" title="Permalink to this definition"></a></dt>
-<dd><p>Get a seed from the original image. The algorithm will overwrite three pixels as white pixels. The pixels are decided by the previous centre, derived by count_pixels function.
-For ascending aorta segmentation, the algorithm also takes extra seeds. These seeds will then dilate with 3*3 grid</p>
+<dd><p>Create a label map image that has a circle-like shape.
+The pixels within the circle are labeled as white pixels (value of 1), the other are labeled as black pixels (value of 0).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An image slice with some pixels value overwrite to white pixel (value of 1)</p>
+<dd class="field-odd"><p>A label map image that has a circle like shape.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>SITK::IMAGE</p>

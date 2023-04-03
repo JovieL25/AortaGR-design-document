@@ -92,7 +92,7 @@ The simplified version of the algorithm
    segment_filter = sitk.ThresholdSegmentationLevelSetImageFilter()
    skipped_slice = []
 
-   # The stats of the user's chosen slice will be used as reference
+   # The statistics of the user's chosen slice will be used as reference
    # to determine whether a new segmented slice is acceptable
    segmented_slice = segment_single_slice(seed_slice_index, seed_aorta_centre)
    
@@ -115,11 +115,13 @@ The simplified version of the algorithm
        # prev_centre is the new derived centre from last segmented slice
        segmented_slice = segment_single_slice(slice_i, prev_centre)
 
-       # element-wise operation, exactly what we doing with the double for-loop to assign white pixel and black pixel
+       # element-wise operation
+       # exactly what we doing with the double for-loop
+       # to assign white pixel and black pixel
        new_slice = segmented_slice > black_pixel
 
        total_coord, centre = count_pixels(new_slice)
-       if is_new_centre_qualified(total_coord):
+       if is_new_slice_qualified(total_coord):
           skip_counter = 0
           # processing_image is the segmented volume returned
           processing_image[:, :, slice_i] = new_slice
@@ -184,7 +186,7 @@ The simplified version of the algorithm
       new_centre = (x_coord/num_of_white_pixel, y_coord/num_of_white_pixel)
       return num_of_white_pixel, new_centre
 
-   def is_new_centre_qualified(new_size):
+   def is_new_slice_qualified(new_size):
       # compare new slice's number of white pixel to
       # the original slice and the previous size
 
