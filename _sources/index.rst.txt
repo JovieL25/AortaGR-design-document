@@ -35,23 +35,23 @@ The main ideas of the algorithm
 At the beginning of the algorithm, the user inputs the integer coordinates indicating the position of the descending aorta or ascending aorta centre on a single :term:`slice`. The algorithm works separately on the descending aorta segmentation and the ascending aorta segmentation. Thus, it will ask users to input the coordinate of the descending aorta centre. After completing this segmentation, it will prompt the user for the input variable of the ascending aorta.
 
 .. note::
-   The user's chosen slice will be used as a reference throughout the workflow of the algorithm. Therefore, changing the input of the centre coordinate on a different slice could generate a slightly different segmentation result.
+   The user's chosen slice will be used as a reference throughout the workflow of the algorithm. Therefore, changing the input of the centre coordinates on a different slice could generate a slightly different segmentation result.
    
 
-This algorithm segements each :term:`slice` with `SITK\:\:ThresholdSegmentationLevelSetImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ThresholdSegmentationLevelSetImageFilter.html>`_. The principles of this image filter can be explains with two terms: :term:`Level sets` segmentation method, and a :term:`threshold` range that defines the intensity of the acceptable pixel. The following steps elaborate how the algorithm calculated the necessary values to perform segmentation.
+This algorithm segments each :term:`slice` with `SITK\:\:ThresholdSegmentationLevelSetImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ThresholdSegmentationLevelSetImageFilter.html>`_. The principles of this image filter can be explained with two terms: :term:`Level sets` segmentation method, and a :term:`threshold` range that defines the intensity of the acceptable pixel. The following steps elaborate on how the algorithm calculated the necessary values to perform segmentation.
 
-For each slice starting from the user's selected slice, going in the :term:`inferior` first, then :term:`superior` direction
+For each slice starting from the user's selected slice, going in the :term:`inferior` first, then :term:`superior` direction:
 
-1. By using `SITK\:\:BinaryDilateImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1BinaryDilateImageFilter.html>`_ to perform :term:`binary dilation`, the algorithm generates a :term:`label map` image which contains a circle-like shape around the centre coordinate (user input's or calculated by the algorithm). Each pixel within the circle will be labeled as white pixel (value of 1), and the rest of the pixels are labeled as black pixel (value of 0).
-
-
-2. By using `SITK\:\:LabelStatisticsImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelStatisticsImageFilter.html>`_, the algorithm gets the mean and the standard deviation of the intensity values of the pixels that were labeled as white pixel in the previous step. The algorithm uses :term:`Threshold coefficient` to calculate the lower and upper :term:`threshold`.
+1. By using `SITK\:\:BinaryDilateImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1BinaryDilateImageFilter.html>`_ to perform :term:`binary dilation`, the algorithm generates a :term:`label map` image which contains a circle-like shape around the centre coordinate (user input's or calculated by the algorithm). Each pixel within the circle will be labeled as a white pixel (value of 1), and the rest of the pixels are labeled as black pixels (value of 0).
 
 
-3. With `SITK\:\:SignedMaurerDistanceMapImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1SignedMaurerDistanceMapImageFilter.html>`_, the algorithm creates another image, the :term:`Euclidean distance transform` of the label image created in step 1, and uses it as the seed image (:term:`contour line`) in `SITK\:\:ThresholdSegmentationLevelSetImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ThresholdSegmentationLevelSetImageFilter.html>`_. 
+2. By using `SITK\:\:LabelStatisticsImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelStatisticsImageFilter.html>`_, the algorithm gets the mean and the standard deviation of the intensity values of the pixels that were labeled as the white pixel in the previous step. The algorithm uses :term:`threshold coefficient` to calculate the lower and upper :term:`threshold` to be used in the next step.
 
 
-4. The algorithm determines whether to accept the :term:`Segmented slice` or not, based on the number of white pixels on the segmented slice, and the :term:`Qualified coefficient` to control the limit.
+3. With `SITK\:\:SignedMaurerDistanceMapImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1SignedMaurerDistanceMapImageFilter.html>`_, the algorithm creates another image, the :term:`Euclidean distance transform` of the label image created in step 1, and uses it as the seed image (:term:`contour line`) in `SITK\:\:ThresholdSegmentationLevelSetImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ThresholdSegmentationLevelSetImageFilter.html>`_, with the lower and upper threshold value calculated in step 2. The filtered image is the :term:`segmented slice`.
+
+
+4. The algorithm determines whether to accept the :term:`segmented slice` or not, based on the number of white pixels on the segmented slice, and the :term:`Qualified coefficient` to control the limit.
 
     .. note::
 
@@ -67,8 +67,8 @@ For each slice starting from the user's selected slice, going in the :term:`infe
        
        The algorithm will replace these skipped slices with the calculated intersection of the previous and the next slice.
 
-The pseudocode of the algorithm
-*******************************
+The simplified version of the algorithm
+***************************************
 
 .. code-block:: python
    :linenos:
