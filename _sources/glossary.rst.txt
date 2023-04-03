@@ -62,7 +62,22 @@ Glossary of Terms Used in AortaGeomRecon Documentation
         A threshold is an amount, level, or limit on a scale. When the threshold is reached, something else happens or changes.
 
     Level sets
-        Level Sets are an important category of modern image segmentation techniques based on partial differential equations (PDE), i.e. progressive evaluation of the differences among neighboring pixels to find object boundaries.
+        Level Sets are an important category of modern image segmentation techniques based on partial differential equations (PDE), i.e. progressive evaluation of the differences among neighboring pixels to find object boundaries. The pictures below demonstrate an example of how Level Sets method work on finding the region of the heart
+
+        .. figure:: heart-1.png
+           :alt: Distance transformation
+
+           The seed contour
+
+        .. figure:: heart-2.png
+           :alt: Distance transformation
+
+           The result after some iterations
+
+        .. figure:: heart-3.png
+           :alt: Distance transformation
+
+           The final result
 
     contour line
         A contour line (also isoline, isopleth, or isarithm) of a function of two variables is a curve along which the function has a constant value so that the curve joins points of equal value.
