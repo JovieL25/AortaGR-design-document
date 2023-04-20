@@ -70,7 +70,6 @@ The algorithm determines whether to accept the :term:`segmented slice` or not, b
 If the algorithm accepted this segmented slice, a new centre coordinate is calculated and used as the seed coordinate for segmenting the next slice.
 
 
-7. **[The end of segmentation]**
 When a segmented slice is not acceptable, the algorithm will skip this slice if the number of consecutive skipped slices is less than the user's limit. Otherwise, the algorithm will stop the segmentation loop. 
 
     .. note::
