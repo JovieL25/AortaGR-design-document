@@ -1,29 +1,21 @@
 AortaGeomReconDisplayModule package
-===================================
-
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 4
-
-   AortaGeomReconDisplayModuleLib
+======================================
 
 Submodules
 ----------
 
-AortaGeomReconDisplayModule.AortaGeomReconDisplayModule module
---------------------------------------------------------------
+AortaGeomReconDisplayModuleWidget module
+----------------------------------------------------
 
-.. automodule:: AortaGeomReconDisplayModule.AortaGeomReconDisplayModule
+.. autoclass:: AortaGeomReconDisplayModule.AortaGeomReconDisplayModuleWidget
    :members:
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
+AortaGeomReconDisplayModuleLogic module
+----------------------------------------------------
 
-.. automodule:: AortaGeomReconDisplayModule
+.. autoclass:: AortaGeomReconDisplayModule.AortaGeomReconDisplayModuleLogic
    :members:
    :undoc-members:
    :show-inheritance:
